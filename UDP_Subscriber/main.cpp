@@ -25,7 +25,8 @@ int main(int argc, char* argv[])
 
     int portNum = generatePortNum();
     //string shape = argv[1];
-    registerToPublisher("squares", portNum, "127.0.0.1");
+   // registerToPublisher("squares", portNum, "127.0.0.1");//squares only
+    registerToPublisher("circles", portNum, "127.0.0.1"); //squares & circles
 
     // wait one sec and then connect to portNum:
     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
