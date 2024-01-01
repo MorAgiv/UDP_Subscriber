@@ -34,7 +34,7 @@ int main(int argc, char* argv[])
     SOCKET in = socket(AF_INET, SOCK_DGRAM, 0);
     if (bind(in, (sockaddr*)&PortNumSocket, sizeof(PortNumSocket)) == SOCKET_ERROR)
     {
-        cout << "Can't bind socket to port " << portNum << "bc error number: " << WSAGetLastError() << endl;
+        cout << "Can't bind socket to port " << portNum << " due to error number: " << WSAGetLastError() << endl;
         return 1;
     }
     cout << "Socket is bound  successfully to port " << portNum << endl;
@@ -56,7 +56,7 @@ int main(int argc, char* argv[])
             char clientIp[256];
             ZeroMemory(clientIp, 256);
             inet_ntop(AF_INET, &client.sin_addr, clientIp, 256);
-            cout << "Message recv from " << clientIp << " on port " << portNum << ": " << buf << endl;
+            cout << "Message recieved from " << clientIp << " on port " << portNum << ": " << buf << endl;
         }
     }
 
@@ -88,7 +88,7 @@ int generatePortNum() {
 void registerToPublisher(string registerShape, int portNum, string ipAddress) {
     sockaddr_in ListeningSocket = createSocket(registrationPortNum, "127.0.0.1");
     SOCKET out = socket(AF_INET, SOCK_DGRAM, 0);
-    cout << "tries to register with port number" << portNum << endl;
+    cout << "tries to register with port number: " << portNum << endl;
     string registrationMessage = "REGISTER " + registerShape + to_string(portNum);// Inform the publisher about the subscriber's port
     cout << "registration message: " << registrationMessage << endl;
     sendto(out, registrationMessage.c_str(), registrationMessage.size() + 1, 0, (sockaddr*)&ListeningSocket, sizeof(ListeningSocket));
